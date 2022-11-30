@@ -79,15 +79,64 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var currentArr = this.rows;
+      var counter = 0;
+      for (var i = 0; i < currentArr[rowIndex].length; i++) {
+        if (currentArr[rowIndex][i] === 1) {
+          counter++;
+        }
+        if (counter === 2) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var currentArr = this.rows();
+      var counter = 0;
+      var conflictFlag = false;
+
+      console.log(currentArr);
+      for (var i = 0; i < currentArr.length; i++) { // which row?
+        for (var j = 0; j < currentArr[i].length; j++) { // your in the specific row now
+          if (currentArr[i][j] === 1) {
+            counter++;
+          }
+        }
+        if (counter === 2) {
+          conflictFlag = true;
+          break;
+        } else {
+          counter = 0;
+        }
+      }
+      return conflictFlag;
     },
 
 
+/*
+
+var matches = [3,1,1]
+
+var resultObject = {
+  3: 1
+  1: 2
+}
+
+
+ var matrix = [
+
+      0   1   2.  3
+
+      [0, 0, 0, 1],
+      [1, 1, 0, 1],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0]
+    ];
+*/
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
@@ -95,11 +144,41 @@
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       return false; // fixme
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var currentArr = this.rows();
+      var counter = [];
+      var resultObject = {};
+      var conflictFlag = false;
+
+      for (var i = 0; i < currentArr.length; i++) { // which row?
+        for (var j = 0; j < currentArr[i].length; j++) {
+          if (currentArr[i][j] === 1) {
+            counter.push(j);
+          }
+        }
+      }
+
+
+      for (var p = 0; p < counter.length; p++) {
+        if (resultObject[counter[p]] === undefined) {
+          resultObject[counter[p]] = 1;
+        } else {
+          resultObject[counter[p]]++;
+        }
+      }
+
+      for (var key in resultObject) {
+        if (resultObject[key] > 1) {
+          conflictFlag = true;
+          break;
+        }
+      }
+
+      return conflictFlag;
     },
 
 
