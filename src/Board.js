@@ -215,7 +215,7 @@ var resultObject = {
 
 
     },
-
+    // testing
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       var currentArr = this.rows();
