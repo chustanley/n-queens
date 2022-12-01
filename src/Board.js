@@ -85,11 +85,12 @@
         if (currentArr[rowIndex][i] === 1) {
           counter++;
         }
-        if (counter === 2) {
-          return true;
-        } else {
-          return false;
-        }
+      }
+
+      if (counter === 2) {
+        return true;
+      } else {
+        return false;
       }
     },
 
@@ -99,7 +100,7 @@
       var counter = 0;
       var conflictFlag = false;
 
-      console.log(currentArr);
+
       for (var i = 0; i < currentArr.length; i++) { // which row?
         for (var j = 0; j < currentArr[i].length; j++) { // your in the specific row now
           if (currentArr[i][j] === 1) {
@@ -162,7 +163,6 @@ var resultObject = {
         }
       }
 
-
       for (var p = 0; p < counter.length; p++) {
         if (resultObject[counter[p]] === undefined) {
           resultObject[counter[p]] = 1;
@@ -181,19 +181,71 @@ var resultObject = {
       return conflictFlag;
     },
 
+    //     var matrix = [
 
+    //       0   1   2.  3
+
+    //       [1, 0, 0, 0],
+    //       [0, 1, 0, 0],
+    //       [0, 0, 0, 0],
+    //       [0, 0, 0, 0]
+    //     ];
+    //
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var currentArr = this.rows();
+      var counter = [];
+      var resultObject = {};
+      var conflictFlag = false;
+      var firstRowIndex = majorDiagonalColumnIndexAtFirstRow; // 0
+
+      for (var i = 1; i < currentArr.length; i++) {
+
+        if (currentArr[i][firstRowIndex + 1] === 1) {
+          conflictFlag = true;
+          break;
+        }
+
+
+      }
+
+
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var currentArr = this.rows();
+      var counter = []; // 3, 5, 2
+      var resultObject = {};
+      var conflictFlag = false;
+
+
+      for (var i = 0; i < currentArr.length; i++) {
+        // if we have previously found 1's in the matrix.
+        if (counter.length !== 0) {
+          for (var p = 0; p < counter.length; p++) {
+            counter[p]++;
+          }
+        }
+        // this goes into each value in the row (column)
+        for (var j = 0; j < currentArr[i].length; j++) {
+          // if we found a 1 in the current row, and we have previous found a 1 in the incremented list.
+          if (currentArr[i][j] === 1 && counter.indexOf(j) !== -1) {
+            conflictFlag = true;
+            break;
+          }
+
+          if (currentArr[i][j] === 1) {
+            counter.push(j);
+          }
+        }
+
+      }
+      return conflictFlag;
     },
 
 
@@ -208,7 +260,34 @@ var resultObject = {
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var currentArr = this.rows();
+      var counter = []; // 3, 5, 2
+      var resultObject = {};
+      var conflictFlag = false;
+
+
+      for (var i = 0; i < currentArr.length; i++) {
+        // if we have previously found 1's in the matrix.
+        if (counter.length !== 0) {
+          for (var p = 0; p < counter.length; p++) {
+            counter[p]--;
+          }
+        }
+        // this goes into each value in the row (column)
+        for (var j = 0; j < currentArr[i].length; j++) {
+          // if we found a 1 in the current row, and we have previous found a 1 in the incremented list.
+          if (currentArr[i][j] === 1 && counter.indexOf(j) !== -1) {
+            conflictFlag = true;
+            break;
+          }
+
+          if (currentArr[i][j] === 1) {
+            counter.push(j);
+          }
+        }
+
+      }
+      return conflictFlag;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
