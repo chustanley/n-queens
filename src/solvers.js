@@ -86,7 +86,7 @@ window.findNQueensSolution = function(n) {
         [0, 0, 1, 0]
       ];
   */
-
+  //comment
   var recursiveFunc = function (currentRow) {
     // base case -- what ends the recursive function
     if (currentRow === n) {
